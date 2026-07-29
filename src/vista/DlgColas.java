@@ -10,12 +10,23 @@ package vista;
  */
 public class DlgColas extends javax.swing.JDialog {
 
+    private java.util.LinkedList<String> cola = new java.util.LinkedList<>();
+    private javax.swing.DefaultListModel<String> modeloCola = new javax.swing.DefaultListModel<>();
+
     /**
      * Creates new form DlgColas
      */
     public DlgColas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        lstColas.setModel(modeloCola);
+    }
+
+    private void actualizarLista() {
+        modeloCola.clear();
+        for (String nombre : cola) {
+            modeloCola.addElement(nombre);
+        }
     }
 
     /**
@@ -36,15 +47,25 @@ public class DlgColas extends javax.swing.JDialog {
         btnBuscar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lstColas = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Colas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         btnInsertar.setText("Insertar");
+        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarActionPerformed(evt);
+            }
+        });
 
         btnMostar.setText("Mostrar");
+        btnMostar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +95,7 @@ public class DlgColas extends javax.swing.JDialog {
             }
         });
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstColas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,9 +105,9 @@ public class DlgColas extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombre))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                    .addComponent(lblNombre)
+                    .addComponent(txtAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -143,20 +164,44 @@ public class DlgColas extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+        String nombre = txtAgregar.getText().trim();
+        if (nombre.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingresa un nombre");
+            return;
+        }
+        cola.offer(nombre);
+        txtAgregar.setText("");
+        actualizarLista();
+    }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void btnMostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostarActionPerformed
+        actualizarLista();
+    }//GEN-LAST:event_btnMostarActionPerformed
+
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if (cola.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La cola esta vacia");
+        } else {
+            String eliminado = cola.poll();
+            javax.swing.JOptionPane.showMessageDialog(this, "Se elimino: " + eliminado);
+        }
+        actualizarLista();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        String nombre = txtBuscar.getText().trim();
+        boolean existe = cola.contains(nombre);
+        javax.swing.JOptionPane.showMessageDialog(this,
+            existe ? "El nombre SI esta en la cola" : "El nombre NO esta en la cola");
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
-        // TODO add your handling code here:
+        btnBuscarActionPerformed(evt);
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAgregarActionPerformed
-        // TODO add your handling code here:
+        btnInsertarActionPerformed(evt);
     }//GEN-LAST:event_txtAgregarActionPerformed
 
     /**
@@ -206,10 +251,10 @@ public class DlgColas extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnMostar;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JList<String> lstColas;
     private javax.swing.JTextField txtAgregar;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables

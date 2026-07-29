@@ -104,15 +104,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHashMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHashMapActionPerformed
-        // TODO add your handling code here:
+        DlgHashMap dialogo = new DlgHashMap(this, true);
+        dialogo.setVisible(true);
     }//GEN-LAST:event_btnHashMapActionPerformed
 
     private void btnPilasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPilasActionPerformed
-        // TODO add your handling code here:
+        DlgPilas dialogo = new DlgPilas(this, true);
+        dialogo.setVisible(true);
     }//GEN-LAST:event_btnPilasActionPerformed
 
     private void btnColasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColasActionPerformed
-        // TODO add your handling code here:
+        DlgColas dialogo = new DlgColas(this, true);
+        dialogo.setVisible(true);
     }//GEN-LAST:event_btnColasActionPerformed
 
     /**
